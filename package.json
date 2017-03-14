@@ -1,0 +1,27 @@
+{
+  "name": "book2share",
+  "version": "1.0.0",
+  "description": "Web server of Book2Share",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eaqp2016g2/Book2ShareAPI.git"
+  },
+  "keywords": [
+    "book",
+    "sharing",
+    "culture",
+    "freedom",
+    "literature",
+    "essays"
+  ],
+  "author": "EAqp1617g2",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/eaqp2016g2/Book2ShareAPI/issues"
+  },
+  "homepage": "https://github.com/eaqp2016g2/Book2ShareAPI#readme"
+}
