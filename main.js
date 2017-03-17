@@ -2,13 +2,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var userModel = require('./models/userModel');
-var userController = require('./controllers/userController');
+var userController = require('./controllers/userCtrl');
 var bookModel = require('./models/bookModel');
 
 var app      = express();                     // Utilizamos express
 var mongoose = require('mongoose');
-var http = require('http');
-var server = http.createServer(app);
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
