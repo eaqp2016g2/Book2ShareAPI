@@ -4,7 +4,7 @@
 var express = require('express');
 var crypto = require('crypto');
 
-var userModel = require('../models/userModel');
+var user = require('../models/userModel');
 
 exports.register = function (req, res) {
     console.log(req.body);
@@ -27,3 +27,16 @@ exports.register = function (req, res) {
 exports.login = function (req,res) {
     console.log(req.body);
 }
+
+
+/* exports.register = function (req, res) {
+    user.create({name:req.body.name, email:req.body.email, password:req.body.password, avatar:'imagen.png'},
+    function(err, user){
+        if (err)
+        res.send(err);
+        user.find(function(err,user){
+            if (err)
+            res.send(err)
+            res.json(user);
+        });
+    }); */
