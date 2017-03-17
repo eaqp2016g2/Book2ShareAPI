@@ -15,8 +15,8 @@ module.exports = function(app) {
     //apiRoutes.route('/logout')
     //    .post(userController.logout);
 
-    //apiRoutes.route('/users')
-    //    .get(userController.getUsers);
+    apiRoutes.route('/users')
+        .get(userController.getUsers);
     //apiRoutes.route('/users/:userid')
     //    .get(userController.getUserById)
     //    .put(userController.updateUser)
