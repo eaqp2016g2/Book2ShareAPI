@@ -3,7 +3,6 @@
  */
 var express = require('express');
 var crypto = require('crypto');
-
 var userModel = require('../models/userModel');
 
 exports.register = function (req, res) {
@@ -30,7 +29,17 @@ exports.register = function (req, res) {
 };
 
 exports.login = function (req,res) {
-    console.log(req.body);
+    userModel.findOne({'email':req.body.email},function(err,user){        
+           if (user!= null){
+            req.body.password = crypto.createHash('sha256').update(req.body.password).digest('base64')
+            if(req.body.password==user.password)
+            res.send('Bienvenido: '+user.name)
+            else
+            res.send('Error en el usuario o contraseña')
+            }
+            else
+            res.send('Error en el usuario o contraseña')
+        });
 }
 
 exports.getUsers=function(req,res){
