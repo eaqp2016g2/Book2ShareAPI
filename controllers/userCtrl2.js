@@ -4,7 +4,7 @@
 var express = require('express');
 var crypto = require('crypto');
 
-var user = require('../models/userModel');
+var userModel = require('../models/userModel');
 
 exports.register = function (req, res) {
     console.log(req.body);
