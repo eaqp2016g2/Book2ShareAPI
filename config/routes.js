@@ -4,6 +4,7 @@
 var express = require('express');
 var userController = require('../controllers/userCtrl');
 var bookController = require('../controllers/bookCtrl');
+const auth = require('../middlewares/middleware.js')
 
 module.exports = function(app) {
     var apiRoutes = express.Router();
@@ -27,6 +28,10 @@ module.exports = function(app) {
         .get(bookController.getBooks);
     apiRoutes.route('/books/add')
         .post(bookController.setBooks);
+        apiRoutes.route('/private')
+        .get(auth.isAuth, function (req, res){
+            res.status(200).send({message:'Tienes acceso'})
+        });
 
     app.use('/api', apiRoutes);
 };

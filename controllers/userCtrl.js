@@ -37,7 +37,7 @@ exports.login = function (req,res) {
            if (user!= null){
             req.body.password = crypto.createHash('sha256').update(req.body.password).digest('base64')
             if(req.body.password==user.password)
-            res.send('Bienvenido: '+user.name)
+             return res.status(200).send({token: service.createToken(user)})
             else
             res.send('Error en el usuario o contraseña')
             }
