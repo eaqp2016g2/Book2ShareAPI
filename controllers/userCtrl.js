@@ -4,6 +4,8 @@
 var express = require('express');
 var crypto = require('crypto');
 var userModel = require('../models/userModel');
+var service = require('../services/service.js')
+
 
 exports.register = function (req, res) {
     console.log(req.body);
@@ -19,12 +21,14 @@ exports.register = function (req, res) {
             console.log(err.message);
             return res.status(500).send(err.message);
         }
-        userModel.find(function(err,user){
+        return res.status(200).send({token: service.createToken(user)})
+
+        /*userModel.find(function(err,user){
             if (err)
             res.send(err)
             res.json(user);
-        });
-        exports.login(req, res);
+        });*/
+        //exports.login(req, res);
     });
 };
 
