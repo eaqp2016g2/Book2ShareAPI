@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var userController = require('../controllers/userCtrl');
+var bookController = require('../controllers/bookCtrl');
 
 module.exports = function(app) {
     var apiRoutes = express.Router();
@@ -14,15 +15,18 @@ module.exports = function(app) {
         .post(userController.login);
     //apiRoutes.route('/logout')
     //    .post(userController.logout);
-
-    //apiRoutes.route('/users')
-    //    .get(userController.getUsers);
+    apiRoutes.route('/users')
+        .get(userController.getUsers);
     //apiRoutes.route('/users/:userid')
     //    .get(userController.getUserById)
     //    .put(userController.updateUser)
     //    .delete(userController.deleteUserById);
     //apiRoutes.route('/users/upload')
     //    .post(userController.avatarUpload);
+    apiRoutes.route('/books')
+        .get(bookController.getBooks);
+    apiRoutes.route('/books/add')
+        .post(bookController.setBooks);
 
     app.use('/api', apiRoutes);
 };

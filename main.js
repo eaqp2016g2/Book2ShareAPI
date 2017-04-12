@@ -5,7 +5,7 @@ var userModel = require('./models/userModel');
 var userController = require('./controllers/userCtrl');
 var bookModel = require('./models/bookModel');
 
-var app      = express();                     // Utilizamos express
+var app = express();                     // Utilizamos express
 var mongoose = require('mongoose');
 
 app.use(bodyParser.urlencoded({extended: false}))
@@ -23,7 +23,7 @@ app.use(function (req, res, next) {
 
 require('./config/routes.js')(app);
 
-mongoose.connect('mongodb://localhost:27017/book2share',(err, res) => {
+mongoose.connect('mongodb://localhost:27017/book2share', (err, res) => {
     if (err) {
         return console.log(`Error al conectar a la base de datos: ${err}`)
     }

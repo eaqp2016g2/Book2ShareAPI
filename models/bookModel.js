@@ -7,6 +7,7 @@ module.exports = mongoose.model('book',{
     idioma: String,
     autor:[String],
     editorial:String,
+    usuario: String,
     comentarios:[String]
 
 });
