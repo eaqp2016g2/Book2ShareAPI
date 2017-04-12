@@ -4,6 +4,8 @@
 var express = require('express');
 var crypto = require('crypto');
 var userModel = require('../models/userModel');
+var service = require('../services/service.js')
+
 
 exports.register = function (req, res) {
     console.log(req.body);
@@ -32,13 +34,11 @@ exports.login = function (req, res) {
             if (req.body.password == user.password)
                 user.save(function (err, user) {
                     if (err) return res.send(500, err.message);
-                    // return the information including token as JSON
-                    token = "prueba";
                     user.password = "";
                     res.json({
                         user: user,
                         success: true,
-                        token: token
+                        token: service.createToken(user)
                     });
                 });
             else
