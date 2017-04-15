@@ -49,10 +49,48 @@ exports.login = function (req, res) {
     });
 };
 
+exports.logout = function (req, res, callback) {
+
+};
+
 exports.getUsers = function (req, res) {
     userModel.find(function (err, user) {
         if (err)
             res.send(err)
         res.json(user);
     });
+};
+
+exports.getUserById = function (req, res) {
+
+};
+
+exports.avatarUpload = function (req, res) {
+
+};
+
+exports.updateUser = function (req, res){
+    User.update( {_id : req.params.user_id},
+        {$set:{name : req.body.name, admin: false}},
+        function(err) {
+            if (err)
+                res.send(err);
+            Persona.find(function(err, user) {
+                if (err)
+                    res.send(err);
+                res.json(user);
+            });
+        });
+};
+
+exports.deleteUserById = function (req, res) {
+
+};
+
+exports.getBooksByUserId = function (req, res) {
+
+};
+
+exports.getNotifications = function (req, res) {
+
 };

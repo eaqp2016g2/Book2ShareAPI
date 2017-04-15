@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-module.exports = mongoose.model('book',{
+module.exports = mongoose.model('bookModel',{
     titulo: String,
     genero: String,
     publicacion:Number,
@@ -8,6 +8,4 @@ module.exports = mongoose.model('book',{
     autor:[String],
     editorial:String,
     usuario: String,
-    comentarios:[String]
-
 });

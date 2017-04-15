@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var mongooseUniqueValidator = require('mongoose-unique-validator');
 var Schema = mongoose.Schema;
 
-var conversationSchema = new Schema({
+var messagingSchema = new Schema({
     userA: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel'
@@ -11,15 +11,18 @@ var conversationSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel'
     },
-    messages: [{
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'userModel'
-        },
-        content: {type: String},
-        date: {type: Date}
-    }],
-    modifiedDate: {type: Date}
+    content: {
+        type: String
+    },
+    date: {
+        type: Date
+    },
+    delivered: {
+        type: Boolean
+    },
+    read: {
+        type: Boolean
+    }
 });
 
 messagingSchema.plugin(mongooseUniqueValidator);

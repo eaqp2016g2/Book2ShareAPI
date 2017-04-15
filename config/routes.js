@@ -6,7 +6,8 @@ var userController = require('../controllers/userCtrl');
 var bookController = require('../controllers/bookCtrl');
 const auth = require('../middlewares/middleware.js')
 
-module.exports = function(app) {
+bookController.
+module.exports = function (app) {
     var apiRoutes = express.Router();
 
     /**Users**/
@@ -25,12 +26,13 @@ module.exports = function(app) {
     //apiRoutes.route('/users/upload')
     //    .post(userController.avatarUpload);
     apiRoutes.route('/books')
-        .get(bookController.getBooks);
-    apiRoutes.route('/books/add')
+        .get(bookController.getBooks)
         .post(bookController.setBooks);
-        apiRoutes.route('/private')
-        .get(auth.isAuth, function (req, res){
-            res.status(200).send({message:'Tienes acceso'})
+    apiRoutes.route('/books/:book_id')
+        .get(bookController.getBookbyID);
+    apiRoutes.route('/private')
+        .get(auth.isAuth, function (req, res) {
+            res.status(200).send({message: 'Tienes acceso'})
         });
 
     app.use('/api', apiRoutes);
