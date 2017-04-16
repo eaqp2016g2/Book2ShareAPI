@@ -1,8 +1,9 @@
 var express = require('express');
 var crypto = require('crypto');
 var Book = require('../models/bookModel');
+var User = require('../models/userModel');
 
-
+/* FALLA */
 exports.getBookByID = function () {
     Book.findOne({_id: req.params.book_id}, function (err, book) {
         if (err) {
@@ -29,7 +30,7 @@ exports.setBooks = function (req, res) {
             autor: req.body.autor, editorial: req.body.editorial,
             usuario: req.body.usuario, comentario: req.body.comentario
         },
-        function (err, book) {
+        function (err) {
             if (err)
                 res.send(err);
             Book.find(function (err, book) {
@@ -41,7 +42,7 @@ exports.setBooks = function (req, res) {
 };
 
 exports.deleteBook = function (req, res) {
-    Book.remove({_id: req.params.book_id}, function (err, book) {
+    Book.remove({_id: req.params.book_id}, function (err) {
         if (err)
             res.send(err);
         Book.find(function (err, book) {
@@ -53,7 +54,7 @@ exports.deleteBook = function (req, res) {
 }
 
 exports.addBooktoUser = function (req,res){
-    userModel.findOne({'_id': req.params.user_id}, function (err, user) {
+    User.findOne({'_id': req.params.user_id}, function (err, user) {
         if (err) return res.send(500, err.message);
         if (!user) {
             res.json({success: false, message: 'Usuari no trobat'});
