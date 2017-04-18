@@ -25,10 +25,10 @@ exports.getBooks = function (req, res) {
 exports.setBooks = function (req, res) {
     Book.create(
         {
-            titulo: req.body.titulo, genero: req.body.genero,
-            publicacion: req.body.publicacion, idioma: req.body.idioma,
-            autor: req.body.autor, editorial: req.body.editorial,
-            usuario: req.body.usuario, comentario: req.body.comentario
+            title: req.body.titulo, genre: req.body.genero,
+            year: req.body.publicacion, language: req.body.idioma,
+            author: req.body.autor, editorial: req.body.editorial,
+            propietary: req.body.usuario
         },
         function (err) {
             if (err)

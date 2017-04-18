@@ -31,21 +31,22 @@ exports.login = function (req, res) {
     User.findOne({'email': req.body.email}, function (err, user) {
         if (user != null) {
             req.body.password = crypto.createHash('sha256').update(req.body.password).digest('base64');
-            if (req.body.password == user.password)
+            if (req.body.password === user.password) {
                 user.save(function (err, user) {
                     if (err) return res.send(500, err.message);
                     user.password = "";
-                    var token="1";
                     res.json({
                         user: user,
                         success: true,
-                        //token: service.createToken(user)
-                        token: token
+                        token: service.createToken(user)
                     });
                 });
-            else
+                console.log("Inici de sessió");
+            }
+            else{
                 res.json({success: false, message: 'Error en el usuario o contraseña'});
                 console.log("Error en el usuario o contraseña");
+            }
         }
         else
             res.json({success: false, message: 'Usuari no trobat'});
@@ -82,7 +83,14 @@ exports.getUsers = function (req, res) {
 };
 
 exports.getUserById = function (req, res) {
-
+    User.findOne({_id: req.params.user_id}), function (err, user) {
+        if (err) return res.send(500, err.message);
+        if (!user) {
+            res.json({success: false, message: 'Usuari no trobat'});
+        } else if (user) {
+            res.status(200).jsonp(user);
+        }
+    }
 };
 
 exports.avatarUpload = function (req, res) {
@@ -123,7 +131,11 @@ exports.updateUser = function (req, res){
         });
 };
 
-exports.deleteUserById = function (req, res) {
+exports.deleteUser = function (req, res) {
+    User.findByIdAndRemove({_id: req.params.user_id}, function (err) {
+        if (err) return res.send(500, err.message);
+        res.status(200).send("Eliminat");
+    });
 
 };
 

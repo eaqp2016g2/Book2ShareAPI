@@ -25,10 +25,10 @@ module.exports = function (app) {
         .post(userController.logout);
     apiRoutes.route('/users')
         .get(userController.getUsers);
-    apiRoutes.route('/users/:userid')
+    apiRoutes.route('/users/:user_id')
         .get(userController.getUserById)
         .put(userController.updateUser)
-        .delete(userController.deleteUserById);
+        .delete(userController.deleteUser);
     apiRoutes.route('/users/upload')
         .post(userController.avatarUpload);
 
