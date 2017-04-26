@@ -10,7 +10,7 @@ var locationController = require('../controllers/interchangeCtrl');
 var reviewController = require('../controllers/reviewCtrl');
 var adminController = require('../controllers/adminCtrl');
 
-const auth = require('../middlewares/middleware.js')
+const auth = require('../middlewares/middleware.js');
 
 module.exports = function (app) {
     var apiRoutes = express.Router();
@@ -32,6 +32,11 @@ module.exports = function (app) {
     apiRoutes.route('/users/upload')
         .post(userController.avatarUpload);
 
+    /* ADMINISTRACIÓ */
+
+    apiRoutes.route('/admin/:user_id')
+        .delete(adminController.deleteUserById);
+
     /* BOOKS */
 
     apiRoutes.route('/books')
@@ -52,19 +57,19 @@ module.exports = function (app) {
 
     apiRoutes.route('/loc')
     //       .post(locationController.newPoint)
-    //       .get(locationController.getPoints);
+        .get(locationController.getPoints);
     apiRoutes.route('/loc/:loc_id')
 //        .put(locationController.editPoint)
     //      .delete(locationController.deletePoint)
-    //    .get(locationController.getPointByID);
+        .get(locationController.getPointByID);
 
     /* REVIEWS */
 
     apiRoutes.route('/books/:book_id/')
     //      .post(reviewController.newReview)
-    //      .get(reviewController.getReviews);
+        .get(reviewController.getReviewByBook);
     apiRoutes.route('/books/:book_id/:review_id')
-    //      .get(reviewController.getReviewByID);
+        .get(reviewController.getReviewByID);
     //        .put(reviewController.editPoint)
     //      .delete(reviewController.deletePoint)
 

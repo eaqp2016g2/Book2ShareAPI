@@ -3,8 +3,7 @@ var crypto = require('crypto');
 var Book = require('../models/bookModel');
 var User = require('../models/userModel');
 
-/* FALLA */
-exports.getBookByID = function () {
+exports.getBookByID = function (req, res) {
     Book.findOne({_id: req.params.book_id}, function (err, book) {
         if (err) {
             res.send(err)

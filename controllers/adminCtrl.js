@@ -5,10 +5,10 @@
 var User = require('../models/userModel');
 
 exports.deleteUserById = function (req, res) {
-    User.remove({_id : req.params.user_id}, function(err, user) {
+    User.remove({_id : req.params.user_id}, function(err) {
         if (err)
             res.send(err);
-        Persona.find(function(err, user) {
+        User.find(function(err, user) {
             if (err)
                 res.send(err)
             res.json(user);
