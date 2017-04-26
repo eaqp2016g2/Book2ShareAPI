@@ -13,7 +13,7 @@ exports.register = function (req, res) {
         name: req.body.name,
         password: crypto.createHash('sha256').update(req.body.password).digest('base64'),
         email: req.body.email,
-        avatar: 'img/user.png'
+        avatar: '../img/user-identity.svg'
     });
 
     user.save(function (err) {
@@ -83,14 +83,16 @@ exports.getUsers = function (req, res) {
 };
 
 exports.getUserById = function (req, res) {
-    User.findOne({_id: req.params.user_id}), function (err, user) {
-        if (err) return res.send(500, err.message);
+    User.findOne({_id: req.params.user_id}, 
+    function (err, user) {
+        if (err) 
+        res.send(500, err)
         if (!user) {
             res.json({success: false, message: 'Usuari no trobat'});
-        } else if (user) {
-            res.status(200).jsonp(user);
+        }else if (user) {
+            res.status(200).json(user);
         }
-    }
+    })
 };
 
 exports.avatarUpload = function (req, res) {
