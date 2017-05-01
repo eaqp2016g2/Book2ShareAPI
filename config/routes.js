@@ -42,6 +42,8 @@ module.exports = function (app) {
     router.route('/book')
         .get(bookController.getBooks)
         .post(bookController.setBooks);
+    router.route('/book/:title')
+        .get(bookController.getBookByTitle);
     router.route('/book/:book_id')
         .get(bookController.getBookByID);
 

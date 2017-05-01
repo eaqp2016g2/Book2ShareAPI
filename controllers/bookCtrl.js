@@ -13,6 +13,16 @@ exports.getBookByID = function (req, res) {
         }
     })
 };
+exports.getBookByTitle = function (req, res) {
+    Book.find({title: req.params.title}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
 
 exports.getBooks = function (req, res) {
     Book.find(function (err, book) {
