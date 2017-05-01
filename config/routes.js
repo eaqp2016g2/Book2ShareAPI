@@ -13,72 +13,72 @@ var adminController = require('../controllers/adminCtrl');
 const auth = require('../middlewares/middleware.js');
 
 module.exports = function (app) {
-    var apiRoutes = express.Router();
+    var router = express.Router();
 
     /* USERS */
 
-    apiRoutes.route('/users/register')
+    router.route('/users/register')
         .post(userController.register);
-    apiRoutes.route('/users/login')
+    router.route('/users/login')
         .post(userController.login);
-    apiRoutes.route('/users/logout')
+    router.route('/users/logout')
         .post(userController.logout);
-    apiRoutes.route('/users')
+    router.route('/users')
         .get(userController.getUsers);
-    apiRoutes.route('/users/:user_id')
+    router.route('/users/:user_id')
         .get(userController.getUserById)
         .put(userController.updateUser)
         .delete(userController.deleteUser);
-    apiRoutes.route('/users/upload')
+    router.route('/users/upload')
         .post(userController.avatarUpload);
 
     /* ADMINISTRACIÓ */
 
-    apiRoutes.route('/admin/:user_id')
+    router.route('/admin/:user_id')
         .delete(adminController.deleteUserById);
 
     /* BOOKS */
 
-    apiRoutes.route('/books')
+    router.route('/book')
         .get(bookController.getBooks)
         .post(bookController.setBooks);
-    apiRoutes.route('/books/:book_id')
+    router.route('/book/:book_id')
         .get(bookController.getBookByID);
 
     /* MESSAGING */
 
-    apiRoutes.route('/msg')
+    router.route('/msg')
         .post(messagingController.sendMessage);
-    apiRoutes.route('/msg/:user_id')
+    router.route('/msg/:user_id')
         .get(messagingController.getMessagesByUser)
         .put(messagingController.markRead);
 
     /* LOCATIONS */
 
-    apiRoutes.route('/loc')
+    router.route('/loc')
     //       .post(locationController.newPoint)
         .get(locationController.getPoints);
-    apiRoutes.route('/loc/:loc_id')
+    router.route('/loc/:loc_id')
 //        .put(locationController.editPoint)
     //      .delete(locationController.deletePoint)
         .get(locationController.getPointByID);
 
     /* REVIEWS */
 
-    apiRoutes.route('/books/:book_id/')
+    router.route('/books/:book_id/')
     //      .post(reviewController.newReview)
         .get(reviewController.getReviewByBook);
-    apiRoutes.route('/books/:book_id/:review_id')
+    router.route('/books/:book_id/:review_id')
         .get(reviewController.getReviewByID);
     //        .put(reviewController.editPoint)
     //      .delete(reviewController.deletePoint)
 
     /* SERGI */
 
-    apiRoutes.route('/private')
+    router.route('/private')
         .get(auth.isAuth, function (req, res) {
             res.status(200).send({message: 'Tienes acceso'})
         });
 
-    app.use('/api', apiRoutes);
+    app.use('/api', router);
 };

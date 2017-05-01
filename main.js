@@ -1,10 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var userModel = require('./models/userModel');
-var userController = require('./controllers/userCtrl');
-var bookModel = require('./models/bookModel');
-
 var app = express();                     // Utilizamos express
 var mongoose = require('mongoose');
 

@@ -24,17 +24,16 @@ exports.getBooks = function (req, res) {
 exports.setBooks = function (req, res) {
     Book.create(
         {
-            title: req.body.titulo, genre: req.body.genero,
-            year: req.body.publicacion, language: req.body.idioma,
-            author: req.body.autor, editorial: req.body.editorial,
-            propietary: req.body.usuario
+            title: req.body.title,
+            year: req.body.year, language: req.body.language,
+            author: req.body.author, editorial: req.body.editorial
         },
         function (err) {
             if (err)
                 res.send(err);
             Book.find(function (err, book) {
                 if (err)
-                    res.send(err)
+                    res.send(err);
                 res.json(book);
             });
         });

@@ -7,10 +7,13 @@ var userSchema = new Schema({
     password: {type: String},
     name: {type: String},
     avatar: {type: String},
-    fav_genre: [{
+    sex: {
+        type: Boolean
+    },
+    fav_genre: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'genreModel'
-    }],
+    },
     fav_books: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'bookModel'

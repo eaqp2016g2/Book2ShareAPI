@@ -10,6 +10,9 @@ var bookSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'genreModel'
     },
+    img: {
+        type: String
+    },
     year: {
         type: Date
     },
