@@ -14,7 +14,7 @@ var bookSchema = new Schema({
         type: String
     },
     year: {
-        type: Date
+        type: Number
     },
     language: {
         type: String
