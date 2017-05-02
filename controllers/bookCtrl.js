@@ -41,11 +41,13 @@ exports.setBooks = function (req, res) {
         function (err) {
             if (err)
                 res.send(err);
-            Book.find(function (err, book) {
+            else
+            res.json({success: true, message: 'Llibre publicat'});
+           /* Book.find(function (err, book) {
                 if (err)
                     res.send(err);
                 res.json(book);
-            });
+            });*/
         });
 };
 
