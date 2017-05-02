@@ -10,12 +10,9 @@ var interchangePointSchema = new Schema({
     name: {
         type: String
     },
-    latitude: {
+    position: [{
         type: Number
-    },
-    longitude: {
-        type: Number
-    },
+    }],
     description: {
         type: String
     },

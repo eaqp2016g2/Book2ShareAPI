@@ -32,7 +32,6 @@ exports.login = function (req, res) {
         if (user != null) {
             req.body.password = crypto.createHash('sha256').update(req.body.password).digest('base64');
             if (req.body.password === user.password) {
-                //user.save(function (err, user) {
                     if (err) return res.send(500, err.message);
                     user.password = "";
                     res.json({
@@ -40,7 +39,6 @@ exports.login = function (req, res) {
                         success: true,
                         token: service.createToken(user)
                     });
-                //});
                 console.log("Inici de sessió");
             }
             else{

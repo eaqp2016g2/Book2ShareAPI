@@ -29,10 +29,14 @@
     "body-parser": "^1.17.1",
     "crypto": "0.0.3",
     "express": "",
+    "express-session": "^1.15.2",
     "jwt-simple": "^0.5.1",
     "moment": "^2.18.1",
     "mongoose": "^4.9.0",
-    "mongoose-unique-validator": "^1.0.5"
+    "mongoose-unique-validator": "^1.0.5",
+    "passport": "^0.3.2",
+    "passport-google-plus-token": "^2.1.0",
+    "passport-twitter": "^1.0.4"
   },
   "devDependencies": {
     "nodemon": "^1.11.0"

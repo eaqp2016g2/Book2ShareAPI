@@ -14,10 +14,6 @@ var userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'genreModel'
     },
-    fav_books: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'bookModel'
-    }],
     req_books: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'bookModel'

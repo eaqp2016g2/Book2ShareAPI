@@ -28,7 +28,8 @@ exports.getPoints = function (req, res) {
 exports.setPoint = function (req, res) {
     Point.create(
         {
-            name: req.body.name
+            name: req.body.name,
+            position: req.body.pos
         },
         function (err) {
             if (err)
