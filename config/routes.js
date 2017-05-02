@@ -58,7 +58,7 @@ module.exports = function (app) {
     /* LOCATIONS */
 
     router.route('/loc')
-    //       .post(locationController.newPoint)
+        .post(locationController.setPoint)
         .get(locationController.getPoints);
     router.route('/loc/:loc_id')
 //        .put(locationController.editPoint)
