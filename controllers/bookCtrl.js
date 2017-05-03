@@ -14,7 +14,7 @@ exports.getBookByID = function (req, res) {
     })
 };
 exports.getBookByTitle = function (req, res) {
-    Book.find({title: req.params.title}, function (err, book) {
+    Book.find({title: {$regex: '' + req.params.title, $options:"i"}}, function (err, book) {
         if (err) {
             res.send(err)
         }
