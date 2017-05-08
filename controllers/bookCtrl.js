@@ -14,7 +14,37 @@ exports.getBookByID = function (req, res) {
     })
 };
 exports.getBookByTitle = function (req, res) {
-    Book.find({title: req.params.title}, function (err, book) {
+    Book.find({title: {$regex: '' + req.params.title, $options:"i"}}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
+exports.getBookByAuthor = function (req, res) {
+    Book.find({author: {$regex: '' + req.params.author, $options:"i"}}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
+exports.getBookByGenre = function (req, res) {
+    Book.find({genre: {$regex: '' + req.params.genre, $options:"i"}}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
+exports.getBookByLanguage = function (req, res) {
+    Book.find({language: {$regex: '' + req.params.language, $options:"i"}}, function (err, book) {
         if (err) {
             res.send(err)
         }
