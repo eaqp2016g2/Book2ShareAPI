@@ -23,6 +23,36 @@ exports.getBookByTitle = function (req, res) {
         }
     })
 };
+exports.getBookByAuthor = function (req, res) {
+    Book.find({author: {$regex: '' + req.params.author, $options:"i"}}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
+exports.getBookByGenre = function (req, res) {
+    Book.find({genre: {$regex: '' + req.params.genre, $options:"i"}}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
+exports.getBookByLanguage = function (req, res) {
+    Book.find({language: {$regex: '' + req.params.language, $options:"i"}}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
 
 exports.getBooks = function (req, res) {
     Book.find(function (err, book) {
