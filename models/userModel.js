@@ -26,6 +26,10 @@ var userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'messagingModel'
     }],
+    conversations: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'
+    }],
     reviews: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'reviewModel'

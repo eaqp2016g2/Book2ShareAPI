@@ -16,6 +16,18 @@ exports.sendMessage = function (req, res) {
                 if (!userB) {
                     res.json({success: false, message: 'Usuari destí no trobat'});
                 } else if (userB) {
+                    User.update({_id: userA._id},
+                        {$addToSet: {conversations: userB._id}},
+                        function (err) {
+                            if (err)
+                                res.send(err);
+                        });
+                    User.update({_id: userB._id},
+                        {$addToSet: {conversations: userA._id}},
+                        function (err) {
+                            if (err)
+                                res.send(err);
+                        });
                     Message.create(
                         {
                             userA: userA._id, userB: userB._id, content: req.body.content,
