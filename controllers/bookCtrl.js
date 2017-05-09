@@ -13,6 +13,16 @@ exports.getBookByID = function (req, res) {
         }
     })
 };
+exports.getBookByPropietary = function (req, res) {
+    Book.findOne({propietary: req.params.propietary}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
 exports.getBookByTitle = function (req, res) {
     Book.find({title: {$regex: '' + req.params.title, $options:"i"}}, function (err, book) {
         if (err) {
