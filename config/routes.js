@@ -42,7 +42,9 @@ module.exports = function (app) {
     router.route('/book')
         .get(bookController.getBooks)
         .post(bookController.setBooks);
-        router.route('/books/user/:propietary')
+    router.route('/book/:book_id')
+        .delete(bookController.deleteBook);
+    router.route('/books/user/:propietary')
         .get(bookController.getBookByPropietary);
     router.route('/book/search/title/:title')
         .get(bookController.getBookByTitle);

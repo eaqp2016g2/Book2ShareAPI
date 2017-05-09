@@ -14,7 +14,7 @@ exports.getBookByID = function (req, res) {
     })
 };
 exports.getBookByPropietary = function (req, res) {
-    Book.findOne({propietary: req.params.propietary}, function (err, book) {
+    Book.find({propietary: req.params.propietary}, function (err, book) {
         if (err) {
             res.send(err)
         }
