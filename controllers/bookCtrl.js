@@ -66,7 +66,7 @@ exports.setBooks = function (req, res) {
         {
             title: req.body.title,
             year: req.body.year, language: req.body.language,
-            author: req.body.author, editorial: req.body.editorial
+            author: req.body.author, editorial: req.body.editorial, description: req.body.description, propietary: req.body.propietary
         },
         function (err) {
             if (err)
