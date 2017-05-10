@@ -60,6 +60,8 @@ module.exports = function (app) {
     router.route('/msg/:user_id')
         .get(messagingController.getMessagesByUser)
         .put(messagingController.markRead);
+    router.route('/conversations/:user_id')
+        .get(messagingController.refreshConversations);
 
     /* LOCATIONS */
 

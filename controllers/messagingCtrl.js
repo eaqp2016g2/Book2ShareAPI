@@ -4,6 +4,7 @@
 
 var Message = require('../models/messagingModel');
 var User = require('../models/userModel');
+var service = require('../services/service.js');
 
 exports.sendMessage = function (req, res) {
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, userA) {
@@ -76,11 +77,29 @@ exports.getMessagesByUser = function (req, res) {
     });
 };
 
+exports.refreshConversations = function(req, res) {
+    User.findOne({'_id': req.params.user_id}, function (err, user) {
+        if (user != null) {
+            if (err) return res.send(500, err.message);
+            user.password = "";
+            res.json({
+                user: user,
+                success: true,
+                token: service.createToken(user)
+            });
+        }
+        else {
+            res.json({success: false, message: 'Error en el usuario'});
+            console.log("Error en el usuario");
+        }
+    });
+};
+
 exports.markRead = function (req, res) {
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) return res.send(500, err.message);
         else {
-            Message.update({
+            Message.update({ //REVISAR
                     $and: [{$or: [{userA: user._id}, {userB: user._id}]},
                         {$or: [{userA: req.params.user_id}, {userB: req.params.user_id}]}]
                 },
