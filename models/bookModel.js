@@ -26,12 +26,16 @@ var bookSchema = new Schema({
         type: String
     },
     propietary: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userModel'
+        type: String
+        /*type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModel'*/
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel'
+    },
+    description: {
+        type: String
     }
 });
 
