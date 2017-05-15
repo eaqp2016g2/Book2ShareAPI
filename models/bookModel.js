@@ -7,8 +7,9 @@ var bookSchema = new Schema({
         type: String
     },
     genre: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'genreModel'
+        type: [String]
+        /*type: mongoose.Schema.Types.ObjectId,
+        ref: 'genreModel'*/
     },
     img: {
         type: String

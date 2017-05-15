@@ -75,7 +75,7 @@ exports.setBooks = function (req, res) {
     Book.create(
         {
             title: req.body.title,
-            year: req.body.year, language: req.body.language,
+            year: req.body.year, language: req.body.language, genre: req.body.genre,
             author: req.body.author, editorial: req.body.editorial, description: req.body.description, propietary: req.body.propietary
         },
         function (err) {
