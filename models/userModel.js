@@ -45,7 +45,11 @@ var userSchema = new Schema({
         token: {type: String},
         email: {type: String},
         name: {type: String},
-    }
+    },
+    tokens: [{
+        token: {type: String},
+        lastLogin: {type: Date}
+    }]
 });
 userSchema.plugin(mongooseUniqueValidator);
 module.exports = mongoose.model('userModel', userSchema);

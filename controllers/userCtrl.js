@@ -4,7 +4,7 @@
 var express = require('express');
 var crypto = require('crypto');
 var User = require('../models/userModel');
-var service = require('../services/service.js')
+var service = require('../services/service.js');
 
 
 exports.register = function (req, res) {
@@ -32,16 +32,24 @@ exports.login = function (req, res) {
         if (user != null) {
             req.body.password = crypto.createHash('sha256').update(req.body.password).digest('base64');
             if (req.body.password === user.password) {
-                    if (err) return res.send(500, err.message);
-                    user.password = "";
-                    res.json({
-                        user: user,
-                        success: true,
-                        token: service.createToken(user)
-                    });
+                if (err) {
+                    return res.send(500, err.message);
+                }
+                var token = service.createToken(user);
+                var newToken = {
+                    token: token,
+                    lastLogin: Date()
+                };
+                addToken(user, token);
+                user.password = "";
+                res.json({
+                    user: user,
+                    success: true,
+                    token: token
+                });
                 console.log("Inici de sessió");
             }
-            else{
+            else {
                 res.json({success: false, message: 'Error en el usuario o contraseña'});
                 console.log("Error en el usuario o contraseña");
             }
@@ -51,25 +59,54 @@ exports.login = function (req, res) {
     });
 };
 
-exports.logout = function (req, res, callback) {
-    var token = req.headers.authorization;
-    var decoded = verify(token);
-    if (decoded) {
-        db.get(decoded.auth, function (err, record) {
-            if (err) throw err;
-            var updated = JSON.parse(record);
-            updated.valid = false;
-            db.put(decoded.auth, updated, function (err) {
-                if (err) throw err;
-                res.writeHead(200, {'content-type': 'text/plain'});
-                res.end('Sessió tancada');
-                return callback(res);
+function addToken (user, token){
+    var query = {_id: user._id};
+    var update = {$addToSet :
+        {tokens :
+            {token: token, lastLogin: Date()}
+    }};
+    var options = {};
+
+    User.findOneAndUpdate(query, update, options, function(err, user) {
+        if (err) {
+            res.send(err);
+        }
+        if(user){
+            User.findById(user._id).populate('token').exec().then(function(err, user) {
+                if (err) {
+                    res.send(err);
+                }
+                res.send(user);
             });
-        });
-    } else {
-        authFail(res, done);
-        return callback(res);
-    }
+        }
+    });
+}
+
+exports.logout = function (req, res) {
+    console.log("Tanca sessió");
+    var query = {_id: req.body.user_id};
+    var update = {$pull: {tokens: {token: req.body.token}}};
+    var options = {};
+
+    //console.log(req.body.user_id);
+    //console.log(req.body.token);
+
+    User.findOneAndUpdate(query, update, options, function (err, user) {
+        if (err) {
+            res.send(err);
+        }
+        if (user) {
+            User.findById(user._id).populate('tokens').exec().then(function (err, user) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json({
+                    user: user,
+                    success: true
+                });
+            });
+        }
+    });
 };
 
 exports.getUsers = function (req, res) {
@@ -81,51 +118,51 @@ exports.getUsers = function (req, res) {
 };
 
 exports.getUserById = function (req, res) {
-    User.findOne({_id: req.params.user_id}, 
-    function (err, user) {
-        if (err) 
-        res.send(500, err)
-        if (!user) {
-            res.json({success: false, message: 'Usuari no trobat'});
-        }else if (user) {
-            res.status(200).json(user);
-        }
-    })
+    User.findOne({_id: req.params.user_id},
+        function (err, user) {
+            if (err)
+                res.send(500, err)
+            if (!user) {
+                res.json({success: false, message: 'Usuari no trobat'});
+            } else if (user) {
+                res.status(200).json(user);
+            }
+        })
 };
 
 exports.avatarUpload = function (req, res) {
     // create an incoming form object
     /*var form = new formidable.IncomingForm();
-    // specify that we want to allow the user to upload multiple files in a single request
-    form.multiples = true;
-    // store all uploads in the /uploads directory
-    form.uploadDir = path.join(__dirname, '/uploads');
-    // every time a file has been uploaded successfully,
-    // rename it to it's orignal name
-    form.on('file', function (field, file) {
-        fs.rename(file.path, path.join(form.uploadDir, file.name));
-    });
-    // log any errors that occur
-    form.on('error', function (err) {
-        console.log('An error has occured: \n' + err);
-    });
-    // once all the files have been uploaded, send a response to the client
-    form.on('end', function () {
-        res.end('success');
-    });
-    // parse the incoming request containing the form data
-    form.parse(req);*/
+     // specify that we want to allow the user to upload multiple files in a single request
+     form.multiples = true;
+     // store all uploads in the /uploads directory
+     form.uploadDir = path.join(__dirname, '/uploads');
+     // every time a file has been uploaded successfully,
+     // rename it to it's orignal name
+     form.on('file', function (field, file) {
+     fs.rename(file.path, path.join(form.uploadDir, file.name));
+     });
+     // log any errors that occur
+     form.on('error', function (err) {
+     console.log('An error has occured: \n' + err);
+     });
+     // once all the files have been uploaded, send a response to the client
+     form.on('end', function () {
+     res.end('success');
+     });
+     // parse the incoming request containing the form data
+     form.parse(req);*/
     upload.single('avatar')
-    
+
 };
 
-exports.updateUser = function (req, res){
-    User.update( {_id : req.params.user_id},
-        {$set:{name : req.body.name, admin: false}},
-        function(err) {
+exports.updateUser = function (req, res) {
+    User.update({_id: req.params.user_id},
+        {$set: {name: req.body.name, admin: false}},
+        function (err) {
             if (err)
                 res.send(err);
-            User.find(function(err, user) {
+            User.find(function (err, user) {
                 if (err)
                     res.send(err);
                 res.json(user);
