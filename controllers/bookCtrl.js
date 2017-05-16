@@ -95,11 +95,13 @@ exports.deleteBook = function (req, res) {
     Book.remove({_id: req.params.book_id}, function (err) {
         if (err)
             res.send(err);
-        Book.find(function (err, book) {
+            else
+              res.json({success: true, message: 'Llibre eliminat'});
+      /*  Book.find(function (err, book) {
             if (err)
                 res.send(err)
             res.json(book);
-        });
+        });*/
     });
 }
 
