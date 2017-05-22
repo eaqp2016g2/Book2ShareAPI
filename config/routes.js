@@ -55,7 +55,8 @@ module.exports = function (app) {
     router.route('/book/search/language/:language')
         .get(bookController.getBookByLanguage);
     router.route('/book/:book_id')
-        .get(bookController.getBookByID);
+        .get(bookController.getBookByID)
+        .put(bookController.updateBook);
 
     /* MESSAGING */
 
