@@ -10,10 +10,6 @@ var genreSchema = new Schema({
     name: {
         type: String
     },
-    books: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'bookModel'
-    }],
     description: {
         type: String
     },

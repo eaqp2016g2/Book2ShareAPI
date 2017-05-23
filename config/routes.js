@@ -41,7 +41,7 @@ module.exports = function (app) {
 
     router.route('/book')
         .get(bookController.getBooks)
-        .post(bookController.setBooks);
+        .post(bookController.addBooks);
     router.route('/book/:book_id')
         .delete(bookController.deleteBook);
     router.route('/books/user/:propietary')
@@ -56,6 +56,13 @@ module.exports = function (app) {
         .get(bookController.getBookByLanguage);
     router.route('/book/:book_id')
         .get(bookController.getBookByID);
+
+    /* GENRE */
+    router.route('/genre')
+        .get(bookController.getGenres)
+        .post(bookController.addGenre);
+    router.route('/genre/:')
+        .delete(bookController.deleteGenre);
 
     /* MESSAGING */
 

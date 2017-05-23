@@ -59,6 +59,7 @@ exports.getMessagesByUser = function (req, res) {
             return res.send(500, err.message);
         }
         else {
+            console.log(user._id + "+" + req.params.user_id);
             if(user !== null) {
                 Message.find({
                     $and: [{$or: [{userA: user._id}, {userB: user._id}]},
