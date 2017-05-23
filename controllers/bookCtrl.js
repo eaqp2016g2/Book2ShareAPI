@@ -98,11 +98,13 @@ exports.deleteBook = function (req, res) {
     Book.remove({_id: req.params.book_id}, function (err) {
         if (err)
             res.send(err);
-        Book.find(function (err, book) {
+            else
+              res.json({success: true, message: 'Llibre eliminat'});
+      /*  Book.find(function (err, book) {
             if (err)
                 res.send(err);
             res.json(book);
-        });
+        });*/
     });
 };
 
@@ -162,4 +164,26 @@ exports.addBooktoUser = function (req,res){
             });
         }
     });
+};
+
+exports.updateBook = function(req, res){
+		Book.update( {_id : req.params.book_id},
+					{$set:  {
+                title: req.body.title,
+                year: req.body.year, language: req.body.language, genre: req.body.genre,
+                author: req.body.author, editorial: req.body.editorial, description: req.body.description, propietary: req.body.propietary
+            },
+					function(err) {
+						if (err)
+							res.send(err);
+              else
+                res.json({success: true, message: 'Llibre editat'});
+				// Obtine y devuelve todas las personas tras crear una de ellas
+			/*	Book.find(function(err, book) {
+				 	if (err)
+				 		res.send(err)
+				 	res.json(book);
+				});*/
+			}
+	});
 };
