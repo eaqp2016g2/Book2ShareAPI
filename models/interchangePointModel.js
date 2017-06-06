@@ -10,15 +10,15 @@ var interchangePointSchema = new Schema({
     name: {
         type: String
     },
-    position: [{
+    lat: {
         type: Number
-    }],
+    },
+    lng: {
+        type: Number
+    },
     description: {
         type: String
-    },
-    photo: {
-        type: String
-    }
+    }    
 });
 
 interchangePointSchema.plugin(mongooseUniqueValidator);

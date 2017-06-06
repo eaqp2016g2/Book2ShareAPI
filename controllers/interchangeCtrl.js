@@ -29,16 +29,14 @@ exports.setPoint = function (req, res) {
     Point.create(
         {
             name: req.body.name,
-            position: req.body.pos
+            lat: req.body.lat,
+            lng: req.body.lng
         },
         function (err) {
             if (err)
                 res.send(err);
-            Point.find(function (err, loc) {
-                if (err)
-                    res.send(err)
-                res.json(loc);
-            });
+            else
+            res.send(true)
         });
 };
 
