@@ -83,7 +83,7 @@ module.exports = function (app) {
 
     /* LOCATIONS */
 
-    router.route('/loc')
+    router.route('/intPoints')
         .post(locationController.setPoint)
         .get(locationController.getPoints);
     router.route('/loc/:loc_id')

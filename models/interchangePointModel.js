@@ -10,13 +10,13 @@ var interchangePointSchema = new Schema({
     name: {
         type: String
     },
-    position: [{
+    lat: {
         type: Number
-    }],
-    description: {
-        type: String
     },
-    photo: {
+    lng: {
+        type: Number
+    },
+    description: {
         type: String
     },
     books:
