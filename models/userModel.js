@@ -10,14 +10,6 @@ var userSchema = new Schema({
     sex: {
         type: Boolean
     },
-    fav_genre: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'genreModel'
-    },
-    req_books: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'bookModel'
-    }],
     locations: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'interchangePointModel'
@@ -34,6 +26,17 @@ var userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'reviewModel'
     }],
+    notifications: [{
+        message: {type: String},
+        link: {type: String},
+        icon: {type: String},
+        date: {type: Date},
+        read: {type: Boolean}
+    }],
+    settings: {
+        allow_notifications: {type: Boolean},
+        colour_scheme: {type: Number}
+    },
     google: {
         id: {type: String},
         token: {type: String},
