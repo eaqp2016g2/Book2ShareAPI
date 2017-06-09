@@ -29,6 +29,8 @@ module.exports = function (app) {
         .get(userController.getUserById)
         .put(userController.updateUser)
         .delete(userController.deleteUser);
+    router.route('/users/reqbooks')
+        .get(bookController.getOurRequestedBooks);
     router.route('/users/upload')
         .post(userController.avatarUpload);
 
@@ -43,9 +45,15 @@ module.exports = function (app) {
         .get(bookController.getBooks)
         .post(bookController.addBooks);
     router.route('/book/:book_id')
+        .get(bookController.getBookByID)
+        .put(bookController.updateBook)
         .delete(bookController.deleteBook);
+    router.route('/book/:book_id/favorite')
+        .get(bookController.checkRequest)
+        .put(bookController.markAsRequested)
+        .delete(bookController.unMarkAsRequested);
     router.route('/books/user/:propietary')
-        .get(bookController.getBookByPropietary);
+        .get(bookController.getBooksByPropietary);
     router.route('/book/search/title/:title')
         .get(bookController.getBookByTitle);
     router.route('/book/search/author/:author')
@@ -54,15 +62,13 @@ module.exports = function (app) {
         .get(bookController.getBookByGenre);
     router.route('/book/search/language/:language')
         .get(bookController.getBookByLanguage);
-    router.route('/book/:book_id')
-        .get(bookController.getBookByID)
-        .put(bookController.updateBook);
 
     /* GENRE */
+
     router.route('/genre')
         .get(bookController.getGenres)
         .post(bookController.addGenre);
-    router.route('/genre/:')
+    router.route('/genre/:genre_id')
         .delete(bookController.deleteGenre);
 
     /* MESSAGING */
@@ -84,6 +90,8 @@ module.exports = function (app) {
 //        .put(locationController.editPoint)
     //      .delete(locationController.deletePoint)
         .get(locationController.getPointByID);
+
+    /* MAP */
 
     /* REVIEWS */
 

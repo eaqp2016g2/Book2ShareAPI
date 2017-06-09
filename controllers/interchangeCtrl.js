@@ -36,7 +36,7 @@ exports.setPoint = function (req, res) {
                 res.send(err);
             Point.find(function (err, loc) {
                 if (err)
-                    res.send(err)
+                    res.send(err);
                 res.json(loc);
             });
         });
@@ -48,9 +48,9 @@ exports.deletePoint = function (req, res) {
             res.send(err);
         Point.find(function (err, loc) {
             if (err)
-                res.send(err)
+                res.send(err);
             res.json(loc);
         });
     });
-}
+};
 

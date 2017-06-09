@@ -18,7 +18,12 @@ var interchangePointSchema = new Schema({
     },
     photo: {
         type: String
-    }
+    },
+    books:
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'bookModel'
+        }]
 });
 
 interchangePointSchema.plugin(mongooseUniqueValidator);
