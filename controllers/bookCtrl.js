@@ -78,8 +78,7 @@ exports.getBooks = function (req, res) {
     });
 };
 
-exports.addBooks = function (req, res) {
-    console.log(req);
+exports.addBook = function (req, res) {
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) return res.send(500, err.message);
         if (!user) {
@@ -90,11 +89,13 @@ exports.addBooks = function (req, res) {
                     title: req.body.title,
                     year: req.body.year, language: req.body.language, genre: req.body.genre,
                     author: req.body.author, editorial: req.body.editorial, description: req.body.description,
-                    propietary: user._id
+                    propietary: user._id, date: Date.now()
                 },
                 function (err) {
-                    if (err)
+                    if (err){
+                        console.log(err);
                         res.send(err);
+                    }
                     else
                         res.json({success: true, message: 'Llibre publicat'});
                 });
@@ -308,6 +309,8 @@ exports.checkRequest = function (req, res) {
     });
 };
 
+/*** OK ***/
+
 exports.markAsRequested = function (req, res) {
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) {
@@ -315,7 +318,7 @@ exports.markAsRequested = function (req, res) {
         }
         else {
             if (user !== null) {
-                Book.update({_id: req.params.book_id}, {$addToSet: {user: [{reader: user._id}, {approved: false}]}},
+                Book.update({_id: req.params.book_id}, {$addToSet: {user: {reader: user._id, approved: false, date: Date.now()}}},
                     function (err, success) {
                         if (err) {
                             res.send(err);
@@ -332,6 +335,8 @@ exports.markAsRequested = function (req, res) {
     });
 };
 
+/*** OK ***/
+
 exports.unMarkAsRequested = function (req, res) {
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) {
@@ -339,7 +344,7 @@ exports.unMarkAsRequested = function (req, res) {
         }
         else {
             if (user !== null) {
-                Book.update({_id: req.params.book_id}, {$pull: {'user.reader': user._id}},
+                Book.update({_id: req.params.book_id}, {$pull: {user: {reader : user._id}}},
                     function (err, book) {
                         if (err) {
                             res.send(err);

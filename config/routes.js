@@ -43,7 +43,7 @@ module.exports = function (app) {
 
     router.route('/book')
         .get(bookController.getBooks)
-        .post(bookController.addBooks);
+        .post(bookController.addBook);
     router.route('/book/:book_id')
         .get(bookController.getBookByID)
         .put(bookController.updateBook)
