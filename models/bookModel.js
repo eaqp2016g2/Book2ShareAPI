@@ -35,6 +35,10 @@ var bookSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel'
     },
+    point: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'interchangePointModel'
+    },
     description: {
         type: String
     }
