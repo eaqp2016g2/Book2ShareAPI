@@ -59,7 +59,7 @@ exports.getMessagesByUser = function (req, res) {
             return res.send(500, err.message);
         }
         else {
-            console.log(user._id + "+" + req.params.user_id);
+            console.log("Nuestro usuario: " + user._id + " y el otro: " + req.params.user_id);
             if(user !== null) {
                 Message.find({
                     $and: [{$or: [{userA: user._id}, {userB: user._id}]},
@@ -71,10 +71,9 @@ exports.getMessagesByUser = function (req, res) {
                     else {
                         res.json(messages);
                         Message.updateMany({
-                                $and: [{$or: [{userA: user._id}, {userB: user._id}]},
-                                    {$or: [{userA: req.params.user_id}, {userB: req.params.user_id}]}]
+                                $and: [{userB: user._id},{userA: req.params.user_id}]
                             },
-                            {$set: {delivered: true}},
+                            {$set: {read: true}},
                             function (err) {
                                 if (err)
                                     res.send(err);
@@ -99,6 +98,14 @@ exports.refreshConversations = function(req, res) {
                 success: true,
                 token: service.createToken(user)
             });
+            Message.updateMany({
+                    $and: [{userB: user._id},{userA: req.params.user_id}]
+                },
+                {$set: {delivered: true}},
+                function (err) {
+                    if (err)
+                        res.send(err);
+                });
         }
         else {
             res.json({success: false, message: 'Error en el usuario'});
@@ -107,13 +114,14 @@ exports.refreshConversations = function(req, res) {
     });
 };
 
+/** FUNCIÓN NO NECESARIA **/
+
 exports.markRead = function (req, res) {
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) return res.send(500, err.message);
         else {
             Message.updateMany({
-                    $and: [{$or: [{userA: user._id}, {userB: user._id}]},
-                        {$or: [{userA: req.params.user_id}, {userB: req.params.user_id}]}]
+                    $and: [{userB: user._id},{userA: req.params.user_id}]
                 },
                 {$set: {read: true}},
                 function (err) {

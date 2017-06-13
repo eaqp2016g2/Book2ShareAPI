@@ -44,7 +44,7 @@ exports.setReview = function (req, res) {
 
 exports.editReview = function (req, res) {
     
-}
+};
 
 exports.deleteReview = function (req, res) {
     Review.remove({_id: req.params.review_id}, function (err) {
