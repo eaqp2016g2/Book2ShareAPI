@@ -363,7 +363,54 @@ exports.unMarkAsRequested = function (req, res) {
 
 exports.approveLend = function (req, res) {
 
-    return null;
+    User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
+        if (err) {
+            return res.send(500, err.message);
+        }
+        else {
+            if (user !== null) {
+                Book.update({$and: [{_id: req.params.book_id},{propietary: user._id}],'user.reader': req.params.user_id},
+                    {$set: {"user.$.approve" : true}},
+                    function (err, book) {
+                        if (err) {
+                            res.send(err);
+                        }
+                        else{
+                            res.send(book);
+                        }
+                    });
+            }
+            else {
+                return res.status(500).send("ID nula");
+            }
+        }
+    });
+
+};
+
+exports.denyLend = function (req, res) {
+
+    User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
+        if (err) {
+            return res.send(500, err.message);
+        }
+        else {
+            if (user !== null) {
+                Book.update({$and: [{_id: req.params.book_id},{propietary: user._id}]}, {$pull: {user: {reader : req.params.user_id}}},
+                    function (err, book) {
+                        if (err) {
+                            res.send(err);
+                        }
+                        else{
+                            res.send(book);
+                        }
+                    });
+            }
+            else {
+                return res.status(500).send("ID nula");
+            }
+        }
+    });
 
 };
 
