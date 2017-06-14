@@ -89,7 +89,7 @@ exports.addBook = function (req, res) {
                     title: req.body.title,
                     year: req.body.year, language: req.body.language, genre: req.body.genre,
                     author: req.body.author, editorial: req.body.editorial, description: req.body.description,
-                    propietary: user._id, date: Date.now()
+                    propietary: user._id, date: Date.now(),point: req.body.point
                 },
                 function (err) {
                     if (err){

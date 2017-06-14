@@ -26,8 +26,12 @@ var bookSchema = new Schema({
     },
     propietary: {
         type: mongoose.Schema.Types.ObjectId,
-         ref: 'userModel'
+        ref: 'userModel'
     },
+    point: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'interchangePointModel'
+    }, 
     user: [{
         reader: {
             type: mongoose.Schema.Types.ObjectId,
