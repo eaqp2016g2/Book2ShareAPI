@@ -1,6 +1,6 @@
 const jwt = require('jwt-simple')
 const moment = require('moment')
-const  config = require('../config.js')
+const config = require('../config.js')
 
 exports.isAuth = function(req,res, next){
 if (!req.headers.authorization){

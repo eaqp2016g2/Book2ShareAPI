@@ -8,7 +8,8 @@ const service = require('services/service');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
 // load our auth.js config parameters
-const configAuth = require('./auth');
+
+// const configAuth = require('./auth');
 
 module.exports = function (passport) {
 
@@ -23,7 +24,8 @@ module.exports = function (passport) {
     });
 
     //FACEBOOK STRATEGY
-    passport.use(new FacebookStrategy({
+
+/*    passport.use(new FacebookStrategy({
 
             // pull in our app id and secret from our auth.js file
             clientID: configAuth.facebookAuth.clientID,
@@ -33,7 +35,7 @@ module.exports = function (passport) {
 
         },
         myFacebookStrategy)
-    );
+    );*/
 };
 
 function myFacebookStrategy(token, refreshToken, profile, done) {
