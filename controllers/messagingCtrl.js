@@ -54,13 +54,14 @@ exports.sendMessage = function (req, res) {
 /*** OK ***/
 
 exports.getMessagesByUser = function (req, res) {
+    console.log(req.headers);
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) {
             return res.send(500, err.message);
         }
         else {
-            console.log("Nuestro usuario: " + user._id + " y el otro: " + req.params.user_id);
             if(user !== null) {
+                console.log("Nuestro usuario: " + user.name + " y el otro: " + req.params.user_id);
                 Message.find({
                     $and: [{$or: [{userA: user._id}, {userB: user._id}]},
                         {$or: [{userA: req.params.user_id}, {userB: req.params.user_id}]}]
