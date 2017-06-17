@@ -65,6 +65,8 @@ module.exports = function (app) {
         .get(bookController.getBookByGenre);
     router.route('/book/search/language/:language')
         .get(bookController.getBookByLanguage);
+        router.route('/book/search/intPoint/:point')
+        .get(bookController.getBookByPoint);
 
     /* GENRE */
 

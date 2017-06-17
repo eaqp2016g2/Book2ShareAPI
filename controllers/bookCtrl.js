@@ -70,6 +70,16 @@ exports.getBookByLanguage = function (req, res) {
         }
     })
 };
+exports.getBookByPoint = function (req, res) {
+    Book.find({point: req.params.point}, function (err, book) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            res.json(book);
+        }
+    })
+};
 
 exports.getBooks = function (req, res) {
     Book.find(function (err, books) {
