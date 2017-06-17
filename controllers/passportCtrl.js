@@ -6,11 +6,12 @@ var passport = require('passport');
 
 exports.getFacebookCallback = function () {
     passport.authenticate('facebook', {
-        successRedirect: '/#!/library',
+        successRedirect: '#!/portal',
         failureRedirect: '/'
     });
 };
 
 exports.getFacebookAuth = function () {
+    console.log("Intento de autentificación");
     passport.authenticate('facebook', { scope: 'email' })
 };

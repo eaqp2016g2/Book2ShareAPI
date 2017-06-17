@@ -9,8 +9,6 @@ var messagingController = require('../controllers/messagingCtrl');
 var locationController = require('../controllers/interchangeCtrl');
 var reviewController = require('../controllers/reviewCtrl');
 var adminController = require('../controllers/adminCtrl');
-var passportController = require('../controllers/passportCtrl');
-
 
 const auth = require('../middlewares/middleware.js');
 
@@ -114,16 +112,6 @@ module.exports = function (app) {
         .get(auth.isAuth, function (req, res) {
             res.status(200).send({message: 'Tienes acceso'})
         });
-
-    /* FACEBOOK */
-
-    // handle the callback after facebook has authenticated the user
-
-    router.route('/facebook')
-        .get(passportController.getFacebookAuth);
-
-    router.route('/facebook/callback')
-        .get(passportController.getFacebookCallback);
 
     app.use('/api', router);
 };

@@ -10,6 +10,12 @@ var userSchema = new Schema({
     sex: {
         type: Boolean
     },
+    birthday: {
+        type: Date
+    },
+    biography: {
+        type: String
+    },
     locations: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'interchangePointModel'

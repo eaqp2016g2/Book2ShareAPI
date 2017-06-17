@@ -5,6 +5,7 @@ var User = require('../models/userModel');
 var Genre = require('../models/genreModel');
 
 exports.getBookByID = function (req, res) {
+    console.log(req.params);
     Book.findOne({_id: req.params.book_id}, function (err, book) {
         if (err) {
             res.send(err)
@@ -79,6 +80,7 @@ exports.getBooks = function (req, res) {
 };
 
 exports.addBook = function (req, res) {
+    console.log(req.headers);
     User.findOne({'tokens.token': req.headers['x-access-token']}, function (err, user) {
         if (err) return res.send(500, err.message);
         if (!user) {
@@ -89,7 +91,7 @@ exports.addBook = function (req, res) {
                     title: req.body.title,
                     year: req.body.year, language: req.body.language, genre: req.body.genre,
                     author: req.body.author, editorial: req.body.editorial, description: req.body.description,
-                    propietary: user._id, date: Date.now(),point: req.body.point
+                    propietary: user._id, date: Date.now(), point: req.body.point
                 },
                 function (err) {
                     if (err){

@@ -29,7 +29,7 @@ exports.register = function (req, res) {
 exports.login = function (req, res) {
     console.log(req.body);
     User.findOne({'email': req.body.email}, function (err, user) {
-        if (user != null) {
+        if (user !== null) {
             req.body.password = crypto.createHash('sha256').update(req.body.password).digest('base64');
             if (req.body.password === user.password) {
                 if (err) {
@@ -59,20 +59,21 @@ exports.login = function (req, res) {
     });
 };
 
-function addToken (user, token){
+function addToken(user, token) {
     var query = {_id: user._id};
-    var update = {$addToSet :
-        {tokens :
-            {token: token, lastLogin: Date()}
-    }};
+    var update = {
+        $addToSet: {
+            tokens: {token: token, lastLogin: Date()}
+        }
+    };
     var options = {};
 
-    User.findOneAndUpdate(query, update, options, function(err, user) {
+    User.findOneAndUpdate(query, update, options, function (err, user) {
         if (err) {
             res.send(err);
         }
-        if(user){
-            User.findById(user._id).populate('token').exec().then(function(err, user) {
+        if (user) {
+            User.findById(user._id).populate('token').exec().then(function (err, user) {
                 if (err) {
                     res.send(err);
                 }
@@ -112,7 +113,7 @@ exports.logout = function (req, res) {
 exports.getUsers = function (req, res) {
     User.find(function (err, user) {
         if (err)
-            res.send(err)
+            res.send(err);
         res.json(user);
     });
 };
@@ -121,7 +122,7 @@ exports.getUserById = function (req, res) {
     User.findOne({_id: req.params.user_id},
         function (err, user) {
             if (err)
-                res.send(500, err)
+                res.send(500, err);
             if (!user) {
                 res.json({success: false, message: 'Usuari no trobat'});
             } else if (user) {
@@ -157,17 +158,53 @@ exports.avatarUpload = function (req, res) {
 };
 
 exports.updateUser = function (req, res) {
-    User.update({_id: req.params.user_id},
-        {$set: {name: req.body.name, admin: false}},
-        function (err) {
-            if (err)
-                res.send(err);
-            User.find(function (err, user) {
+    if (req.body.password === undefined) {
+        User.update({_id: req.params.user_id},
+            {
+                $set: {
+                    name: req.body.name,
+                    email: req.body.email,
+                    //password: crypto.createHash('sha256').update(req.body.password).digest('base64'),
+                    sex: req.body.sex,
+                    biography: req.body.biography,
+                    birthday: req.body.birthday
+                }
+            },
+            function (err) {
+                if (err) {
+                    res.send(err);
+                }
+                User.findOne({_id: req.params.user_id},function (err, user) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json(user);
+                });
+            });
+    }
+    else {
+
+        User.update({_id: req.params.user_id},
+            {
+                $set: {
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: crypto.createHash('sha256').update(req.body.password).digest('base64'),
+                    sex: req.body.sex,
+                    biography: req.body.biography,
+                    birthday: req.body.birthday
+                }
+            },
+            function (err) {
                 if (err)
                     res.send(err);
-                res.json(user);
+                User.findOne({_id: req.params.user_id},function (err, user) {
+                    if (err)
+                        res.send(err);
+                    res.json(user);
+                });
             });
-        });
+    }
 };
 
 exports.deleteUser = function (req, res) {

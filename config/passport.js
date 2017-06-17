@@ -9,7 +9,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 // load our auth.js config parameters
 
-// const configAuth = require('./auth');
+//const configAuth = require('config/auth');
 
 module.exports = function (passport) {
 
@@ -25,7 +25,7 @@ module.exports = function (passport) {
 
     //FACEBOOK STRATEGY
 
-/*    passport.use(new FacebookStrategy({
+    /*passport.use(new FacebookStrategy({
 
             // pull in our app id and secret from our auth.js file
             clientID: configAuth.facebookAuth.clientID,
@@ -39,7 +39,6 @@ module.exports = function (passport) {
 };
 
 function myFacebookStrategy(token, refreshToken, profile, done) {
-    process.nextTick(function () {
         console.log("facebook");
         User.findOne({ email: profile.emails[0].value }, function (err, user) {
             if (err) {
@@ -62,5 +61,4 @@ function myFacebookStrategy(token, refreshToken, profile, done) {
                 done(null, user);
             });
         });
-    });
 }
