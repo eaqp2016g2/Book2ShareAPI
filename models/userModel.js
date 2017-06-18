@@ -28,10 +28,6 @@ var userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModel'
     }],
-    reviews: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'reviewModel'
-    }],
     notifications: [{
         message: {type: String},
         link: {type: String},

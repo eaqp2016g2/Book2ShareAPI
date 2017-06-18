@@ -361,7 +361,7 @@ exports.approveLend = function (req, res) {
         else {
             if (user !== null) {
                 Book.update({$and: [{_id: req.params.book_id},{propietary: user._id}],'user.reader': req.params.user_id},
-                    {$set: {"user.$.approve" : true}},
+                    {$set: {"user.$.approved" : true}},
                     function (err, book) {
                         if (err) {
                             res.send(err);
@@ -388,12 +388,12 @@ exports.denyLend = function (req, res) {
         else {
             if (user !== null) {
                 Book.update({$and: [{_id: req.params.book_id},{propietary: user._id}]}, {$pull: {user: {reader : req.params.user_id}}},
-                    function (err, book) {
+                    function (err, result) {
                         if (err) {
                             res.send(err);
                         }
                         else{
-                            res.send(book);
+                            res.send(result);
                         }
                     });
             }
@@ -403,30 +403,4 @@ exports.denyLend = function (req, res) {
         }
     });
 
-};
-
-/// ????
-
-exports.addBooktoUser = function (req, res) {
-    User.findOne({'_id': req.params.user_id}, function (err, user) {
-        if (err) {
-            return res.send(500, err.message);
-        }
-        if (!user) {
-            res.json({success: false, message: 'Usuari no trobat'});
-        } else if (user) {
-            user.books.push(book._id);
-            var notification = {
-                read: "false",
-                message: "Tens un nou llibre en prèstec",
-                icon: "book.png",
-                date: Date()
-            };
-            user.notifications.push(notification);
-            user.save(function (err) {
-                if (err) return res.send(500, err.message);
-                res.status(200).jsonp(book);
-            });
-        }
-    });
 };

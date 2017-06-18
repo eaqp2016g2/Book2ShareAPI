@@ -7,7 +7,6 @@ var userController = require('../controllers/userCtrl');
 var bookController = require('../controllers/bookCtrl');
 var messagingController = require('../controllers/messagingCtrl');
 var locationController = require('../controllers/interchangeCtrl');
-var reviewController = require('../controllers/reviewCtrl');
 var adminController = require('../controllers/adminCtrl');
 
 const auth = require('../middlewares/middleware.js');
@@ -65,7 +64,7 @@ module.exports = function (app) {
         .get(bookController.getBookByGenre);
     router.route('/book/search/language/:language')
         .get(bookController.getBookByLanguage);
-        router.route('/book/search/intPoint/:point')
+    router.route('/book/search/intPoint/:point')
         .get(bookController.getBookByPoint);
 
     /* MESSAGING */
@@ -84,21 +83,10 @@ module.exports = function (app) {
         .post(locationController.setPoint)
         .get(locationController.getPoints);
     router.route('/loc/:loc_id')
-//        .put(locationController.editPoint)
+    //        .put(locationController.editPoint)
     //      .delete(locationController.deletePoint)
         .get(locationController.getPointByID);
 
-    /* MAP */
-
-    /* REVIEWS */
-
-    router.route('/books/:book_id/')
-    //      .post(reviewController.newReview)
-        .get(reviewController.getReviewByBook);
-    router.route('/books/:book_id/:review_id')
-        .get(reviewController.getReviewByID);
-    //        .put(reviewController.editPoint)
-    //      .delete(reviewController.deletePoint)
 
     /* SERGI */
 
