@@ -10,9 +10,6 @@ var userSchema = new Schema({
     sex: {
         type: Boolean
     },
-    birthday: {
-        type: Date
-    },
     biography: {
         type: String
     },
@@ -37,7 +34,10 @@ var userSchema = new Schema({
     }],
     settings: {
         allow_notifications: {type: Boolean},
-        colour_scheme: {type: Number}
+        colour: {
+            primario: {type: String},
+            secundario: {type: String}
+        }
     },
     google: {
         id: {type: String},

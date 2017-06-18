@@ -40,8 +40,8 @@ exports.sendMessage = function (req, res) {
                                     {$addToSet: {
                                         notifications: {
                                             message: "En/na" + userA.name + " t'ha obert una nova conversa",
-                                            link: "/#!/messaging",
-                                            icon: "mail-unread-new.svg",
+                                            link: "messaging",
+                                            icon: "img/mail-unread-new.svg",
                                             date: Date.now(),
                                             read: false
                                         }
@@ -122,7 +122,7 @@ exports.getMessagesByUser = function (req, res) {
 
 exports.refreshConversations = function(req, res) {
     User.findOne({'_id': req.params.user_id}, function (err, user) {
-        if (user != null) {
+        if (user !== null) {
             if (err) return res.send(500, err.message);
             user.password = "";
             res.json({

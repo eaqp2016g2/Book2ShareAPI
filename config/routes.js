@@ -8,6 +8,7 @@ var bookController = require('../controllers/bookCtrl');
 var messagingController = require('../controllers/messagingCtrl');
 var locationController = require('../controllers/interchangeCtrl');
 var adminController = require('../controllers/adminCtrl');
+var notificationController = require('../controllers/notificationCtrl');
 
 const auth = require('../middlewares/middleware.js');
 
@@ -32,6 +33,13 @@ module.exports = function (app) {
         .get(bookController.getOurRequestedBooks);
     router.route('/users/upload')
         .post(userController.avatarUpload);
+    router.route('/notifications/:value')
+        .put(notificationController.allowNotifications);
+    router.route('/notifications')
+        .post(notificationController.colour);
+    router.route('/notifications/read/:id')
+        .put(notificationController.markRead);
+
 
     /* ADMINISTRACIÓ */
 

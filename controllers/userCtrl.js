@@ -13,7 +13,13 @@ exports.register = function (req, res) {
         name: req.body.name,
         password: crypto.createHash('sha256').update(req.body.password).digest('base64'),
         email: req.body.email,
-        avatar: '../img/user-identity.svg'
+        avatar: '../img/user-identity.svg',
+        settings: {
+            colour: {
+                primario: 'blue',
+                secundario: 'green'
+            }
+        }
     });
 
     user.save(function (err) {
@@ -166,8 +172,7 @@ exports.updateUser = function (req, res) {
                     email: req.body.email,
                     //password: crypto.createHash('sha256').update(req.body.password).digest('base64'),
                     sex: req.body.sex,
-                    biography: req.body.biography,
-                    birthday: req.body.birthday
+                    biography: req.body.biography
                 }
             },
             function (err) {
@@ -191,8 +196,7 @@ exports.updateUser = function (req, res) {
                     email: req.body.email,
                     password: crypto.createHash('sha256').update(req.body.password).digest('base64'),
                     sex: req.body.sex,
-                    biography: req.body.biography,
-                    birthday: req.body.birthday
+                    biography: req.body.biography
                 }
             },
             function (err) {
