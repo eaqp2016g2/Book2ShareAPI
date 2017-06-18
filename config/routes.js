@@ -68,14 +68,6 @@ module.exports = function (app) {
         router.route('/book/search/intPoint/:point')
         .get(bookController.getBookByPoint);
 
-    /* GENRE */
-
-    router.route('/genre')
-        .get(bookController.getGenres)
-        .post(bookController.addGenre);
-    router.route('/genre/:genre_id')
-        .delete(bookController.deleteGenre);
-
     /* MESSAGING */
 
     router.route('/msg')

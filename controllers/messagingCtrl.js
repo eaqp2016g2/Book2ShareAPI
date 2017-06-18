@@ -25,12 +25,43 @@ exports.sendMessage = function (req, res) {
                             if (err)
                                 res.send(err);
                         });
+
+                    // NOTIFICACIÓ
+
+                    User.findOne({_id: userB._id},function(err,user){
+                        var notified = false;
+                        for(var i=0;i<user.conversations.length;i++) {
+                            if (user.conversations[i] === userA._id) {
+                                notified = true;
+                            }
+                        }
+                        if(!notified){
+                                User.update({_id: userB._id},
+                                    {$addToSet: {
+                                        notifications: {
+                                            message: "En/na" + userA.name + " t'ha obert una nova conversa",
+                                            link: "/#!/messaging",
+                                            icon: "mail-unread-new.svg",
+                                            date: Date.now(),
+                                            read: false
+                                        }
+                                    }
+                                    },
+                                    function (err) {
+                                        if(err){
+                                            res.send(err);
+                                        }
+                                    });
+                            }
+                    });
+
                     User.update({_id: userB._id},
                         {$addToSet: {conversations: userA._id}},
                         function (err) {
                             if (err)
                                 res.send(err);
                         });
+
                     Message.create(
                         {
                             userA: userA._id, userB: userB._id, content: req.body.content,

@@ -162,53 +162,6 @@ exports.deleteBook = function (req, res) {
     });
 };
 
-/** GENRE ***/
-
-exports.addGenre = function (req, res) {
-    Genre.create(
-        {
-            name: req.body.name,
-            description: req.body.description
-        },
-        function (err) {
-            if (err) {
-                res.send(err);
-            }
-            Genre.find(function (err, genres) {
-                if (err) {
-                    res.send(err);
-                }
-                else {
-                    res.json(genres);
-                }
-            });
-        })
-};
-
-exports.deleteGenre = function (req, res) {
-    Genre.remove({_id: req.params.genre_id}, function (err) {
-        if (err){
-            res.send(err);}
-        Genre.find(function (err, genres) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-            res.json(genres);
-            }
-        });
-    });
-};
-
-exports.getGenres = function (req, res) {
-    Genre.find(function (err, genres) {
-        if (err)
-        {
-            res.send(err);
-        }
-        res.json(genres);
-    });
-};
 
 /*** INTERCHARGE POINT ***/
 
@@ -330,16 +283,42 @@ exports.markAsRequested = function (req, res) {
         }
         else {
             if (user !== null) {
-                Book.update({_id: req.params.book_id}, {$addToSet: {user: {reader: user._id, approved: false, date: Date.now()}}},
-                    function (err, success) {
-                        if (err) {
-                            res.send(err);
+                Book.findOne({_id: req.params.book_id},function(err, book) {
+                    var pedido = false;
+                        for (var i = 0; book.user < book.user.length; i++) {
+                            if(book.user.reader[i] === user._id){
+                                pedido = true;
+                            }
                         }
-                        else{
-                            res.send(success);
+                        if(!pedido){
+                            Book.update({_id: req.params.book_id}, {$addToSet: {user: {reader: user._id, approved: false, date: Date.now()}}},
+                                function (err, success) {
+                                    if (err) {
+                                        res.send(err);
+                                    }
+                                    else{
+                                        res.send(success);
+                                    }
+                                });
+                            User.update({_id: book.propietary},
+                                {$addToSet: {
+                                    notifications: {
+                                        message: "En/na " + user.name + " t'ha demanat el prèstec del llibre " + book.title,
+                                        link: "/#!/book",
+                                        icon: "accesories-dictionary.svg",
+                                        date: Date.now(),
+                                        read: false
+                                    }
+                                }
+                                },
+                                function (err) {
+                                    if(err){
+                                        res.send(err);
+                                    }
+                                });
                         }
                     });
-            }
+                }
             else {
                 return res.status(500).send("ID nula");
             }
