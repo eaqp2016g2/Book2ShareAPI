@@ -258,11 +258,17 @@ exports.checkRequest = function (req, res) {
                     else {
                         if (book === null) {
                             console.log("Libro: " + req.params.book_id + " Usuario: " + user._id + " = Falso");
-                            res.status(200).send(false);
+                            res.status(200).send({favorite: false, approved: false});
                         }
                         else {
                             console.log("Libro: " + req.params.book_id + " Usuario: " + user._id + " = Verdadero");
-                            res.status(200).send(true);
+                            var aprobado = false;
+                            for(var i=0; i < book.user.length; i++){
+                                if(book.user[i].approved === true){
+                                    aprobado = true;
+                                }
+                            }
+                            res.status(200).send({favorite: true, approved: aprobado});
                         }
                     }
                 });
